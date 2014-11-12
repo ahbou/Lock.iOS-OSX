@@ -1,4 +1,4 @@
-//  A0CredentialFieldView.m
+// A0PhoneFieldView.h
 //
 // Copyright (c) 2014 Auth0 (http://auth0.com)
 //
@@ -20,23 +20,37 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+#import <UIKit/UIKit.h>
 #import "A0CredentialFieldView.h"
-#import "A0Theme.h"
 
-@implementation A0CredentialFieldView
+/**
+ *  Custom view to input a phone number + country code
+ */
+@interface A0PhoneFieldView : A0CredentialFieldView
 
-- (void)layoutSubviews {
-    [super layoutSubviews];
-    self.iconImageView.image = [self.iconImageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-}
+/**
+ *  Default country code used. By default is US `"+1"`
+ */
+@property (copy, nonatomic) NSString *defaultCountryCode;
 
-- (void)setInvalid:(BOOL)invalid {
-    [self willChangeValueForKey:@"invalid"];
-    _invalid = invalid;
-    [self didChangeValueForKey:@"invalid"];
-    self.iconImageView.tintColor = invalid ? [UIColor redColor] : nil;
-    self.textField.tintColor = invalid ? [UIColor redColor] : nil;
-    self.textField.textColor = invalid ? [UIColor redColor] : nil;
-}
+/**
+ *  Country code selected
+ */
+@property (readonly, nonatomic) NSString *countryCode;
+
+/**
+ *  Phone number + country code.
+ */
+@property (readonly, nonatomic) NSString *fullPhoneNumber;
+
+/**
+ *  Phone number only
+ */
+@property (readonly, nonatomic) NSString *phoneNumber;
+
+/**
+ *  Block called when country code button is tapped. It's used to allow the user to change the country code.
+ */
+@property (copy, nonatomic) void(^onCountryCodeTapped)(NSString *currentCountryCode);
 
 @end
